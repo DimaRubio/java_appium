@@ -24,26 +24,10 @@ public class TestCalculation {
         caps.setCapability("appPackage", "com.android.calculator2");
         caps.setCapability("appActivity", "com.android.calculator2.Calculator");
         driver = new AndroidDriver (new URL("http://127.0.0.1:4723/wd/hub"), caps);
-        int r= 10;
-//        driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
     }
     @Test
     public void testExample(){
-//        WebElement five=driver.findElement(By.name("5"));
-//        five.click();
-//        WebElement plus=driver.findElement(By.name("+"));
-//        plus.click();
-//        WebElement four=driver.findElement(By.name("4"));
-//        four.click();
-//        WebElement equalTo=driver.findElementByAccessibilityId("equals");
-//        equalTo.click();
-
-//        driver.findElement(By.id("com.android.calculator2:id/digit_4")).click();
-//        driver.findElement(By.id("com.android.calculator2:id/op_add")).click();
-//        driver.findElement(By.id("com.android.calculator2:id/digit_8")).click();
-//        driver.findElement(By.id("com.android.calculator2:id/eq")).click();
-//        String result = driver.findElement(By.className("android.widget.EditText")).getText();
-//        System.out.println("Result of Addition is : " + result);
 
         //clean display
         driver.findElementByAccessibilityId("delete").click();
