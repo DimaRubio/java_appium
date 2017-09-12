@@ -25,24 +25,24 @@ public class TestDialer {
         caps.setCapability("appPackage", "com.android.dialer");
         caps.setCapability("appActivity", "com.android.dialer.DialtactsActivity");
         driver = new AndroidDriver (new URL("http://127.0.0.1:4723/wd/hub"), caps);
-        driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
     }
     @Test
     public void testDialer(){
 
         WebElement dialPad = driver.findElementByAccessibilityId("dial pad");
         dialPad.click();
-        //type number
 
+        //type number
         driver.findElement(By.id("com.android.dialer:id/one")).click();
         driver.findElement(By.id("com.android.dialer:id/two")).click();
-
-        for (int i = 3; i<= 9; i++){
+        for (int i = 3; i <= 8; i++){
             driver.findElementByAccessibilityId(""+i+"").click();
         }
-        //to	make	the	call
-        WebElement dial = driver.findElementByAccessibilityId("dial");
-        dial.click();
+
+        //to make the call
+        driver.findElementByAccessibilityId("dial").click();
+        turnOfCall();
     }
 
     @Test
@@ -51,19 +51,23 @@ public class TestDialer {
         WebElement dialPad = driver.findElementByAccessibilityId("dial pad");
         dialPad.click();
 
-        //type number
 
+        //perform long press
         TouchAction tAction=new	TouchAction(driver);
         tAction.longPress(driver.findElementByAccessibilityId("0")).perform();
-        WebElement	results= driver.findElementByClassName("android.widget.EditText");
-        assert	results.getText().contains("+"):"Actual	value	is	:"+results.getText()+"	did	not	match	with	expected	value:	+";
+        
+        //type number
         for (int i = 1; i<= 6; i++){
             driver.findElementByAccessibilityId(""+i+"").click();
         }
-        assert	results.getText().contains("+"):"Actual	value	is	:"+results.getText()+"	did	not	match	with	expected	value:	+";
-
+        WebElement	results= driver.findElementByClassName("android.widget.EditText");
+        assert	results.getText().contains("+"):"Actual value is :"+results.getText()+" did not match with expected value: +";
     }
 
+
+    public void turnOfCall(){
+        driver.findElementByAccessibilityId("End").click();
+    }
 
     @AfterClass
     public void tearDown(){
