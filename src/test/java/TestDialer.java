@@ -55,7 +55,7 @@ public class TestDialer {
         //perform long press
         TouchAction tAction=new	TouchAction(driver);
         tAction.longPress(driver.findElementByAccessibilityId("0")).perform();
-        
+
         //type number
         for (int i = 1; i<= 6; i++){
             driver.findElementByAccessibilityId(""+i+"").click();
