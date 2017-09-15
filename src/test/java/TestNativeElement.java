@@ -1,13 +1,18 @@
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidKeyCode;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -17,11 +22,19 @@ import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.By;
+import java.io.File;
+
 
 public class TestNativeElement {
     AndroidDriver driver;
+    File location = new File("screenshots");
+    int count = 1;
+
     @BeforeClass
-    public void setUp() throws MalformedURLException{
+    public void setUp() throws IOException {
+        //clear screenshot dir
+        FileUtils.deleteDirectory(new File(location.getAbsolutePath()));
+
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, "5.1");
         caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
@@ -54,7 +67,6 @@ public class TestNativeElement {
     public void testSwitchBtn(){
         WebElement switchBtn=driver.findElementById("com.android.androidui:id/mySwitch");
         switchBtn.click();
-        String b = switchBtn.getAttribute("checked");
         assert switchBtn.getAttribute("checked").equals("true");
     }
 
@@ -68,8 +80,17 @@ public class TestNativeElement {
         act.press(xAxisStartPoint,yAxis).moveTo(xAxisEndPoint-1,yAxis).release().perform();
     }
 
+    @AfterMethod
+    public  void getScreenshot(ITestResult result) throws IOException {
+        if (!result.isSuccess()) {
+            File screen = driver.getScreenshotAs(OutputType.FILE);
+            String screenShotName = location.getAbsolutePath() + File.separator + (count++) + "screen.png";
+            FileUtils.copyFile(screen, new File(screenShotName));
+        }
+    }
+
     @AfterClass
-    public	void	tearDown(){
+    public void tearDown(){
         driver.closeApp();
     }
 }
