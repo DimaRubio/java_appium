@@ -1,3 +1,4 @@
+import Page.PageAndroidUI;
 import io.appium.java_client.MultiTouchAction;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidKeyCode;
@@ -29,6 +30,7 @@ public class TestNativeElement {
     AndroidDriver driver;
     File location = new File("screenshots");
     int count = 1;
+    PageAndroidUI page;
 
     @BeforeClass
     public void setUp() throws IOException {
@@ -44,20 +46,23 @@ public class TestNativeElement {
         caps.setCapability("appActivity", "com.android.androidui.MainActivity");
         driver = new AndroidDriver (new URL("http://127.0.0.1:4723/wd/hub"), caps);
         driver.manage().timeouts().implicitlyWait(20,TimeUnit.SECONDS);
+        page = new PageAndroidUI(driver);
     }
 
     @Test
     public void testAlert(){
-        WebElement showAlert = driver.findElementById("com.android.androidui:id/buttonAlert");
-        showAlert.click(); //it will open the Alert box
+//        WebElement showAlert = driver.findElementById("com.android.androidui:id/buttonAlert");
+//        showAlert.click(); //it will open the Alert box
+        page.btnAlert.click();
         WebElement but_no = driver.findElementById("android:id/button2");
         but_no.click();// Click on No button
     }
 
     @Test
     public void testSpinner(){
-        WebElement spinner = driver.findElement(By.id("android:id/text1"));
-        spinner.click();
+//        WebElement spinner = driver.findElement(By.id("android:id/text1"));
+//        spinner.click();
+        page.selSpinner.click();
         driver.scrollToExact("India");
         WebElement optionIndia = driver.findElement(By.xpath("//android.widget.CheckedTextView[@text='India']"));
         optionIndia.click();
@@ -65,9 +70,8 @@ public class TestNativeElement {
 
     @Test
     public void testSwitchBtn(){
-        WebElement switchBtn=driver.findElementById("com.android.androidui:id/mySwitch");
-        switchBtn.click();
-        assert switchBtn.getAttribute("checked").equals("true");
+        page.btnSwitch.click();
+        assert page.btnSwitch.getAttribute("checked").equals("true");
     }
 
     @Test
