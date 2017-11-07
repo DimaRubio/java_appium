@@ -21,17 +21,17 @@ public class TestMobAppIication {
     public void setUp() throws MalformedURLException {
         DesiredCapabilities caps = new DesiredCapabilities();
         caps.setCapability(MobileCapabilityType.BROWSER_NAME, "Browser");
-        caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, "4.4");
+        caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, "5.1");
         caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         caps.setCapability(MobileCapabilityType.DEVICE_NAME, "Android emulator");
-        caps.setCapability("avd","Nexus_4_API_19");// Mention the created AVD name
-        driver = new AndroidDriver (new URL("http://127.0.0.1:4723/wd/hub"), caps);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        caps.setCapability("avd","Nexus_5_API_22");// Mention the created AVD name
+        driver = new AndroidDriver (new URL("http://0.0.0.0:4723/wd/hub"), caps);
+//        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
     @Test
     public void testExample() {
         driver.get("https://www.google.com");
-        WebElement searchBox=driver.findElement(By.name("q"));
+        WebElement searchBox=driver.findElement(By.id("com.android.chrome:id/search_box_text"));
         searchBox.sendKeys("Appium for mobile automation");
     }
     @AfterClass
