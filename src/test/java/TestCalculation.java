@@ -24,7 +24,7 @@ public class TestCalculation {
         caps.setCapability(MobileCapabilityType.PLATFORM_VERSION, "5.1");
         caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         caps.setCapability(MobileCapabilityType.DEVICE_NAME, "Android emulator");
-        caps.setCapability("avd","Nexus_5_API_22");// Mention the created AVD name
+        caps.setCapability("avd","Nexus_5_API_26_1");// Mention the created AVD name
         caps.setCapability("appPackage", "com.android.calculator2");
         caps.setCapability("appActivity", "com.android.calculator2.Calculator");
         driver = new AndroidDriver (new URL("http://127.0.0.1:4723/wd/hub"), caps);
@@ -33,7 +33,7 @@ public class TestCalculation {
     }
     @Test
     public void testExample() throws IOException, BiffException {
-        ExcelSheetLibrary excel = new ExcelSheetLibrary("/home/dmytro.bolyachin/AndroidStudioProjects/AppiumBook/AppiumTests/src/test/java/Resources/DDT.xls");
+        ExcelSheetLibrary excel = new ExcelSheetLibrary(System.getProperty("user.dir") + "/src/test/java/Resources/DDT.xls");
         String res = excel.ReadCell(excel.GetCell("Result"), 1);
         //clean display
         page.btnDelete.click();

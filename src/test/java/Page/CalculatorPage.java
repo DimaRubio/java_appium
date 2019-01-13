@@ -31,7 +31,7 @@ public class CalculatorPage {
     @AndroidFindBy(id = "equals")
     public WebElement btnEqual;
 
-    @AndroidFindBy(xpath = "//android.widget.EditText[contains(@resource-id,'result')]")
+    @AndroidFindBy(xpath = "//*[contains(@resource-id,'result')]")
     public WebElement fieldResult;
 
     @AndroidFindBy(id = "delete")
